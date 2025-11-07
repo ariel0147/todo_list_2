@@ -11,4 +11,8 @@ body{
     margin-top: 25px;
     background-color: lightgray;
     border-radius: 10px;
+    text-decoration-line: underline;
+    text-decoration-style: double;
+    text-shadow: 2px 2px 5px red;
+    padding: 20px;
 }
