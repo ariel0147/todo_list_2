@@ -1,9 +1,26 @@
 const express = require('express');
+require('dotenv').config();
+const port = process.env.PORT;
+const api = process.env.HOST;
+const path = require('path');
 const app = express();
-const port = 3666;
-app.use(express.static('public'));
 
+app.use(express.static(__dirname));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',(req,res)=>{
-    res.send('Hello World!');
+    res.sendFile(__dirname+'/public/index.html');
 })
-app.listen(port,()=>{console.log(`http://localhost:${port}`)});
+
+
+app.listen(port,()=>{console.log(`http://${process.env.HOST}:${port}`)});
+
+
+
+
+
+
+
+
+
+

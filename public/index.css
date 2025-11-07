@@ -1,0 +1,14 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: auto;
+    background-color: slategrey;
+}
+#h_head{
+    width: 35%;
+    height: 70px;
+    margin: auto;
+    margin-top: 25px;
+    background-color: lightgray;
+    border-radius: 10px;
+}
