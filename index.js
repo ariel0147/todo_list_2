@@ -7,11 +7,14 @@ const app = express();
 app.use(express.static(__dirname));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const db = require('./config/db_config');
+
 app.get('/',(req,res)=>{
     res.sendFile(__dirname+'/public/index.html');
 })
 
-
+app.use('/users',require('./routes/users_R'));
 app.listen(port,()=>{console.log(`http://${process.env.HOST}:${port}`)});
 
 
