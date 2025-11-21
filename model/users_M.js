@@ -12,7 +12,7 @@ async function getOne(id){
     let sql = `SELECT id,name,email FROM users WHERE id = ?`;
     console.log(sql);
     let [result] = await db.query(sql, [id]);
-    return result[0]; // מחזיר את השורה הראשונה בלבד
+    return result[0];
 }
 
 async function deleteUserFromDB(id){
@@ -23,8 +23,21 @@ async function deleteUserFromDB(id){
     return rows;
 }
 
+async function updateUserFromDB(id, user) {
+    let keys = Object.keys(user);      // ['name', 'email']
+    let values = Object.values(user);  // ['Ariel', 'test@gmail.com']
+    let set = keys.map(k => `${k} = ?`).join(', ');
+    let sql = `UPDATE users SET ${set} WHERE id = ?`;
+    let [result] = await db.query(sql, [...values,id]);
+
+    return result.affectedRows;
+}
+
+
+
 module.exports = {
     getAll,
     getOne,
-    deleteUserFromDB
+    deleteUserFromDB,
+    updateUserFromDB
 };

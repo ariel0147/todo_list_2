@@ -8,8 +8,29 @@ function isValidid(req,res,next){
     next();
 }
 
+function valuesToEdit(req,res,next){
+    let obj = {};
+   if(req.body.name){
+       obj.name = req.body.name;
+   }
+    if(req.body.email){
+        obj.email = req.body.email;
+    }
+    if(req.body.username){
+        obj.username = req.body.username;
+    }
+
+    let keys = Object.keys(obj);
+    if(keys.length === 0){
+        res.status(400).json({message: "חסרים פרטמרים"});
+    }
+    req.user = obj;
+    next();
+}
 
 
- module.exports = {
-     isValidid
+
+module.exports = {
+     isValidid,
+    valuesToEdit
  };

@@ -1,5 +1,5 @@
 // controller/users_C.js
-const { getAll, getOne, deleteUserFromDB } = require('../model/users_M.js');
+const { getAll, getOne, deleteUserFromDB,updateUserFromDB } = require('../model/users_M.js');
 
 async function getAllUsers(req,res){
     try {
@@ -40,4 +40,17 @@ async function deleteUser(req, res) {
     }
 }
 
-module.exports = { getAllUsers, getOneUser, deleteUser };
+async function updateUser(req, res){
+    try {
+        const affectedRows = await updateUserFromDB(req.params.id, req.user);
+        if(!affectedRows || affectedRows === 0){
+            res.status(404).json({message:`user id ${req.params.id} not found or no changes made`});
+            return;
+        }
+        res.status(200).json({message: "user updated successfully"});
+    } catch (error) {
+        res.status(500).json({message: "error"});
+    }
+}
+
+module.exports = { getAllUsers, getOneUser, deleteUser,updateUser };
