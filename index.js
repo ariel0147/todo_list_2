@@ -15,9 +15,10 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/users',require('./routes/users_R'));
-app.listen(port,()=>{console.log(`http://${process.env.HOST}:${port}`)});
 
+app.use('/auth',require('./routes/auth_R'));
 
+app.listen(port,()=>{console.log(`http://${api}:${port}`)});
 
 
 
