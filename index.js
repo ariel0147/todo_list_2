@@ -7,8 +7,9 @@ const app = express();
 app.use(express.static(__dirname));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-
+const cookies = require('cookie-parser');
 const db = require('./config/db_config');
+app.use(cookies());
 
 app.get('/',(req,res)=>{
     res.sendFile(__dirname+'/public/index.html');
