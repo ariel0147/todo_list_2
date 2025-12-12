@@ -2,7 +2,7 @@ const { getAll, getBycategoriesName, add, getOne, deleteCategoryFromDB, update }
 
 async function getAllcategories(req, res) {
     try {
-        let userId = req.user.id; // זיהוי המשתמש
+        let userId = req.user.id;
         let categories = await getAll(userId);
 
         if (categories.length === 0) {
@@ -17,11 +17,12 @@ async function getAllcategories(req, res) {
 async function addcategories(req, res) {
     try {
         let name = req.body.name;
-        let userId = req.user.id; // זיהוי המשתמש
+        let userId = req.user.id;
 
         if (!name) {
             return res.status(400).json({ message: "חובה לשלוח שם קטגוריה" });
         }
+
 
         let existingCategory = await getBycategoriesName(name, userId);
         if (existingCategory) {
@@ -30,12 +31,12 @@ async function addcategories(req, res) {
 
         let newCategoryId = await add(name, userId);
         if (!newCategoryId) {
-            return res.status(500).json({ message: "שגיאה בשמירת הקטגוריה" });
+            return res.status(500).json({ message: "שגיאה בשמירת הקטגוריה בדאטה-בייס" });
         }
 
         res.status(201).json({ message: "נוסף בהצלחה", id: newCategoryId });
     } catch (err) {
-        console.error(err);
+        console.error("Error adding category:", err);
         res.status(500).json({ message: "Server error" });
     }
 }
@@ -57,7 +58,7 @@ async function getOneCategory(req, res) {
 async function deleteCategory(req, res) {
     try {
         const id = req.params.id;
-        const userId = req.user.id; // זיהוי המשתמש
+        const userId = req.user.id;
 
         const result = await deleteCategoryFromDB(id, userId);
         if (!result || result.affectedRows === 0) {
@@ -80,6 +81,7 @@ async function updateCategory(req, res) {
             return res.status(400).json({ message: "חובה לשלוח שם קטגוריה לעדכון" });
         }
         let affectedRows = await update(id, userId, name);
+
         if (affectedRows === 0) {
             return res.status(404).json({ message: "לא ניתן לעדכן: הקטגוריה לא נמצאה או שאינה שייכת לך" });
         }
