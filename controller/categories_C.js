@@ -16,19 +16,14 @@ async function getAllcategories(req, res) {
 async function addcategories(req, res) {
     try {
         let name = req.body.name;
-        let userId = req.user.id; // <--- שליפת המזהה של המשתמש המחובר
-
+        let userId = req.user.id;
         if (!name) {
             return res.status(400).json({ message: "חובה לשלוח שם קטגוריה" });
         }
-
-        // בדיקה אם הקטגוריה קיימת (אפשר לשפר בעתיד לבדיקה לפי משתמש ספציפי)
         let existingCategory = await getBycategoriesName(name);
         if (existingCategory) {
             return res.status(409).json({ message: "שם קטגוריה קיים במערכת" });
         }
-
-        // שליחת השם + מזהה המשתמש למודל
         let newCategoryId = await add(name, userId);
 
         if (!newCategoryId) {
@@ -41,7 +36,7 @@ async function addcategories(req, res) {
         res.status(500).json({ message: "Server error", error: err.message });
     }
 }
-// שליפת קטגוריה אחת לפי ID
+
 async function getOneCategory(req, res) {
     try {
         let category = await getOne(req.params.id);
@@ -54,7 +49,7 @@ async function getOneCategory(req, res) {
     }
 }
 
-// מחיקת קטגוריה
+
 async function deleteCategory(req, res) {
     try {
         const id = req.params.id;
