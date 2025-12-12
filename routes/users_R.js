@@ -6,14 +6,11 @@ const { getAllUsers ,getOneUser,deleteUser,updateUser } = require("../controller
 const {isLoggedIn} = require("../middelware/auth_MID");
 
 router.get('/', isLoggedIn,getAllUsers);
-
 router.get('/:id', isValidid, getOneUser);
+router.delete('/:id', isLoggedIn,isValidid, deleteUser);
+router.patch('/:id',isLoggedIn,isValidid,valuesToEdit,updateUser);
 
 
-router.delete('/:id', isValidid, deleteUser);
-
-
-router.patch('/:id',isValidid,valuesToEdit,updateUser);
 
 
 module.exports = router;
