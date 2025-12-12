@@ -14,10 +14,14 @@ async function getBycategoriesName(name) {
     return result[0];
 }
 
-// --- הוספת הפונקציה שהייתה חסרה ---
-async function add(name) {
-    let sql = `INSERT INTO categoris (name) VALUES (?)`;
-    let [result] = await db.query(sql, [name]);
+// ודא שפונקציית ההוספה נראית כך בקובץ שלך:
+
+async function add(name, userId) {
+    // הוספת עמודת user_id לשאילתה
+    let sql = `INSERT INTO categoris (name, user_id) VALUES (?, ?)`;
+
+    // שליחת שני הפרמטרים (שם ומזהה משתמש)
+    let [result] = await db.query(sql, [name, userId]);
     return result.insertId;
 }
 // ----------------------------------
