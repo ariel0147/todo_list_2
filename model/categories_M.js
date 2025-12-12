@@ -1,40 +1,37 @@
 const db = require("../config/db_config");
 
-async function getAll() {
-
-    let sql = `SELECT * FROM categoris`;
-    let [rows] = await db.query(sql);
+async function getAll(userId) {
+    let sql = `SELECT * FROM categoris WHERE user_id = ?`;
+    let [rows] = await db.query(sql, [userId]);
     return rows;
 }
 
-async function getBycategoriesName(name) {
-
-    let sql = `SELECT * FROM categoris WHERE name = ?`;
-    let [result] = await db.query(sql, [name]);
+async function getBycategoriesName(name, userId) {
+    let sql = `SELECT * FROM categoris WHERE name = ? AND user_id = ?`;
+    let [result] = await db.query(sql, [name, userId]);
     return result[0];
 }
-
-
-
 async function add(name, userId) {
-
     let sql = `INSERT INTO categoris (name, user_id) VALUES (?, ?)`;
-
-    // שליחת שני הפרמטרים (שם ומזהה משתמש)
     let [result] = await db.query(sql, [name, userId]);
     return result.insertId;
 }
 
-
-async function getOne(id) {
-    let sql = `SELECT * FROM categoris WHERE id = ?`;
-    let [result] = await db.query(sql, [id]);
+async function getOne(id, userId) {
+    let sql = `SELECT * FROM categoris WHERE id = ? AND user_id = ?`;
+    let [result] = await db.query(sql, [id, userId]);
     return result[0];
 }
 
-async function deleteCategoryFromDB(id) {
-    const sql = 'DELETE FROM categoris WHERE id = ?';
-    let [result] = await db.query(sql, [id]);
+async function deleteCategoryFromDB(id, userId) {
+    const sql = 'DELETE FROM categoris WHERE id = ? AND user_id = ?';
+    let [result] = await db.query(sql, [id, userId]);
+    return result;
+}
+async function update(id, userId, name) {
+
+    let sql = `UPDATE categoris SET name = ? WHERE id = ? AND user_id = ?`;
+    let [result] = await db.query(sql, [name, id, userId]);
     return result;
 }
 
@@ -43,5 +40,6 @@ module.exports = {
     getBycategoriesName,
     add,
     getOne,
-    deleteCategoryFromDB
+    deleteCategoryFromDB,
+    update
 };
