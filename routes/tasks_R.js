@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const {getAlltasks } = require("../controller/tasks_C");
 
-const {isLoggedIn} = require("../middelware/auth_MID");
-const {addcategories, getOneCategory, deleteCategory, updateCategory} = require("../controller/categories_C");
-const {isValidid} = require("../middelware/users_MID");
+const { getAlltasks, addtasks, getOnetasks, deletetasks, updatetasks } = require("../controller/tasks_C");
 
-router.get('/', isLoggedIn,getAlltasks);
+const { isLoggedIn } = require("../middelware/auth_MID");
+const { isValidid } = require("../middelware/users_MID");
 
-router.post('/',isLoggedIn,addtasks);
+router.get('/', isLoggedIn, getAlltasks);
+
+router.post('/', isLoggedIn, addtasks);
 
 router.get('/:id', isLoggedIn, isValidid, getOnetasks);
 
