@@ -1,31 +1,35 @@
-function valuesToAdd(req,res,next){
+// middelware/tasks_MID.js
+
+function valuesToAdd(req, res, next) {
     let text = req.body.text;
-    if(!text){
-        return res.status(400).json({message:"חסרים נתונים"});
+    if (!text) {
+        return res.status(400).json({ message: "חסרים נתונים" });
     }
     next();
 }
 
-function isValidId(req,res,next){
+function isValidId(req, res, next) {
     let id = parseInt(req.params.id);
-    if(isNaN(id) || id <= 0){
-        res.status(400).json({message:"ID is not valid"})
+    if (isNaN(id) || id <= 0) {
+        return res.status(400).json({ message: "ID is not valid" }); // הוספתי return
     }
     req.id = id;
     next();
 }
 
-function valuesToEdit(req,res,next){
+function valuesToEdit(req, res, next) {
     let obj = {};
-    if(req.body.text){
+    if (req.body.text) {
         obj.text = req.body.text;
     }
-    if(req.body.isDone){
-        obj.is_done = req.body.isDone;
+
+    if (req.body.is_done !== undefined) {
+        obj.is_done = req.body.is_done;
     }
+
     let keys = Object.keys(obj);
-    if(keys.length === 0){
-        return res.status(400).json({message:"חסרים פרמטרים"})
+    if (keys.length === 0) {
+        return res.status(400).json({ message: "חסרים פרמטרים" });
     }
 
     req.newTask = obj;
@@ -36,4 +40,4 @@ module.exports = {
     valuesToAdd,
     isValidId,
     valuesToEdit
-}
+};

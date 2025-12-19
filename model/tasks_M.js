@@ -1,5 +1,5 @@
-const db = require("../config/db_config");
 
+const db = require("../config/db_config");
 
 async function getAll(userId) {
     let sql = `SELECT * FROM tasks WHERE user_id = ?`;
@@ -16,7 +16,7 @@ async function getOne(id, userId) {
 
 
 async function add(text, userId) {
-    let sql = `INSERT INTO tasks (text, user_id) VALUES (?, ?)`; // כאן השינוי ל-text
+    let sql = `INSERT INTO tasks (text, user_id) VALUES (?, ?)`;
     let [result] = await db.query(sql, [text, userId]);
     return result.insertId;
 }
@@ -29,9 +29,15 @@ async function deleteTaskFromDB(id, userId) {
 }
 
 
-async function update(id, userId, text) {
-    let sql = `UPDATE tasks SET text = ? WHERE id = ? AND user_id = ?`; // כאן השינוי ל-text
-    let [result] = await db.query(sql, [text, id, userId]);
+async function update(id, userId, fieldsToUpdate) {
+    let keys = Object.keys(fieldsToUpdate);
+    let values = Object.values(fieldsToUpdate);
+
+
+    let set = keys.map(k => `${k}=?`).join(',');
+
+    let sql = `UPDATE tasks SET ${set} WHERE id = ? AND user_id = ?`;
+    let [result] = await db.query(sql, [...values, id, userId]);
     return result.affectedRows;
 }
 

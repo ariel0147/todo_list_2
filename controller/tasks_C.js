@@ -1,3 +1,4 @@
+
 const { getAll, getOne, add, deleteTaskFromDB, update } = require('../model/tasks_M.js');
 
 async function getAlltasks(req, res) {
@@ -17,7 +18,7 @@ async function getAlltasks(req, res) {
 async function getOnetasks(req, res) {
     try {
         let userId = req.user.id;
-        let taskId = req.params.id;
+        let taskId = req.id;
         let task = await getOne(taskId, userId);
 
         if (!task) {
@@ -34,8 +35,6 @@ async function addtasks(req, res) {
         let text = req.body.text;
         let userId = req.user.id;
 
-
-
         let newTaskId = await add(text, userId);
         if (!newTaskId) {
             return res.status(500).json({ message: "שגיאה בשמירת המשימה" });
@@ -50,7 +49,7 @@ async function addtasks(req, res) {
 
 async function deletetasks(req, res) {
     try {
-        const id = req.params.id;
+        const id = req.id;
         const userId = req.user.id;
 
         const result = await deleteTaskFromDB(id, userId);
@@ -66,14 +65,11 @@ async function deletetasks(req, res) {
 
 async function updatetasks(req, res) {
     try {
-        let id = req.params.id;
+        let id = req.id;
         let userId = req.user.id;
-        let text = req.body.text;
+        let fieldsToUpdate = req.newTask;
 
-        if (!text) {
-            return res.status(400).json({ message: "חובה לשלוח תוכן משימה לעדכון" });
-        }
-        let affectedRows = await update(id, userId, text);
+        let affectedRows = await update(id, userId, fieldsToUpdate);
 
         if (affectedRows === 0) {
             return res.status(404).json({ message: "לא ניתן לעדכן: המשימה לא נמצאה או שאינה שייכת לך" });

@@ -1,19 +1,22 @@
+// routes/tasks_R.js
 const express = require('express');
 const router = express.Router();
 
 const { getAlltasks, addtasks, getOnetasks, deletetasks, updatetasks } = require("../controller/tasks_C");
-
 const { isLoggedIn } = require("../middelware/auth_MID");
-const { isValidid } = require("../middelware/users_MID");
+
+const { valuesToAdd, isValidId, valuesToEdit } = require("../middelware/tasks_MID");
 
 router.get('/', isLoggedIn, getAlltasks);
 
-router.post('/', isLoggedIn, addtasks);
 
-router.get('/:id', isLoggedIn, isValidid, getOnetasks);
+router.post('/', isLoggedIn, valuesToAdd, addtasks);
 
-router.delete('/:id', isLoggedIn, isValidid, deletetasks);
 
-router.patch('/:id', isLoggedIn, isValidid, updatetasks);
+router.get('/:id', isLoggedIn, isValidId, getOnetasks);
+router.delete('/:id', isLoggedIn, isValidId, deletetasks);
+
+
+router.patch('/:id', isLoggedIn, isValidId, valuesToEdit, updatetasks);
 
 module.exports = router;

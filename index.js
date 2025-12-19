@@ -1,19 +1,28 @@
 const express = require('express');
 require('dotenv').config();
 const port = process.env.PORT;
+
 const api = process.env.HOST;
+
 const path = require('path');
+
 const app = express();
-app.use(express.static(__dirname));
+
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(express.static(path.join(__dirname,'public')));
+
 const cookies = require('cookie-parser');
+
 const db = require('./config/db_config');
+const router = require("./routes/auth_R");
 app.use(cookies());
 
 app.get('/',(req,res)=>{
     res.sendFile(__dirname+'/public/index.html');
 })
+
+app.use('/',require('./routes/pages_R'));
 
 app.use('/users',require('./routes/users_R'));
 
