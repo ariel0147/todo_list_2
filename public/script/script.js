@@ -1,2 +1,3 @@
-let h="בוקר טוב";
-document.getElementById('a').innerHTML = h;
+let greating = "Hello ";
+greating += localStorage.getItem('name');
+document.getElementById('greating').innerHTML = greating;

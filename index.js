@@ -18,9 +18,7 @@ const db = require('./config/db_config');
 const router = require("./routes/auth_R");
 app.use(cookies());
 
-app.get('/',(req,res)=>{
-    res.sendFile(__dirname+'/public/index.html');
-})
+
 
 app.use('/',require('./routes/pages_R'));
 

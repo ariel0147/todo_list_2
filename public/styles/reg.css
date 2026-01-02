@@ -79,3 +79,18 @@ h1{
 
     border-bottom: 2px solid #00eaff;
 }
+.input a {
+
+    text-align: center;
+    font-size: 1rem;
+    /*color: #00d0ff;*/
+    text-shadow:
+            0 0 10px #00d0ff,
+            0 0 20px #0091ff,
+            0 0 40px #0091ff;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #00d0ff;
+    box-shadow:
+            0 4px 10px -2px #00d0ff,
+            0 4px 20px -2px #0091ff;
+}
