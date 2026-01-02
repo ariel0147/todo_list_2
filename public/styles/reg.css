@@ -1,12 +1,18 @@
-body{
+/* public/styles/reg.css */
+
+body {
     margin: 0 auto;
     text-align: center;
     background: #050c1d;
     color: #e6f1ff;
     font-family: "Segoe UI", Arial, sans-serif;
     direction: rtl;
+
+    /* סמן ראשי: כוונת מדויקת */
+    cursor: crosshair;
 }
-h1{
+
+h1 {
     text-align: center;
     font-size: 3rem;
     color: #00d0ff;
@@ -20,11 +26,10 @@ h1{
             0 4px 10px -2px #00d0ff,
             0 4px 20px -2px #0091ff;
 }
-.input{
+
+.input {
     margin-right: 35px;
     text-align: center;
-}
-.input{
     margin: 10px;
     padding: 10px;
     color: #00d0ff;
@@ -38,18 +43,18 @@ h1{
     box-shadow:
             0 4px 10px -2px #00d0ff,
             0 4px 20px -2px #0091ff;
-
 }
-.input div{
+
+.input div {
     border: #0088ff solid 2px;
     margin: 15px;
     padding: 15px;
     text-align: center;
 }
-.input button{
+
+.input button {
     text-align: center;
     font-size: 1rem;
-    /*color: #00d0ff;*/
     text-shadow:
             0 0 10px #00d0ff,
             0 0 20px #0091ff,
@@ -59,31 +64,30 @@ h1{
     box-shadow:
             0 4px 10px -2px #00d0ff,
             0 4px 20px -2px #0091ff;
-}
-.input button:hover{
+
+    /* סמן יד ללחיצה */
     cursor: pointer;
+}
+
+.input button:hover {
     transform: scale(1.06);
     transition: 0.25s ease;
-
     color: #00eaff;
     text-shadow:
             0 0 12px #00eaff,
             0 0 25px #00baff,
             0 0 45px #0091ff,
             0 0 70px #0091ff;
-
     box-shadow:
             0 6px 14px -2px #00eaff,
             0 6px 28px -2px #00baff,
             inset 0 0 10px #00caff55;
-
     border-bottom: 2px solid #00eaff;
 }
-.input a {
 
+.input a {
     text-align: center;
     font-size: 1rem;
-    /*color: #00d0ff;*/
     text-shadow:
             0 0 10px #00d0ff,
             0 0 20px #0091ff,
@@ -93,4 +97,36 @@ h1{
     box-shadow:
             0 4px 10px -2px #00d0ff,
             0 4px 20px -2px #0091ff;
+
+    /* סמן יד ללחיצה */
+    cursor: pointer;
+    text-decoration: none;
+    color: #00d0ff;
+}
+
+.input a:visited {
+    color: #00d0ff;
+}
+
+/* סמן כתיבה בתיבות הקלט */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    cursor: text;
+}
+
+/* --- הגדרות הדרקון --- */
+.cursor-glow {
+    /* הגדלנו מ-120 ל-160 */
+    width: 160px;
+    height: 160px;
+
+    background-image: url('../images/dragon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
 }

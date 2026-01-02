@@ -3,19 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Login</title>
+  <link rel="stylesheet" href="../styles/reg.css">
 </head>
 <body>
-<h1>Login</h1>
-<label for="userName">User Name:</label>
-<input type="text" id="userName">
-<br>
-<label for="pass">Password:</label>
-<input type="password" id="pass">
-<br>
-<button onclick="login()">Send</button>
-<br>
-<a href="/reg">אינך רשום? להרשמה לחץ כאן</a>
+<h1 id="h_head">to-do-list📃</h1>
+
+<div class="input">
+  <h3 class="title">Login</h3>
+
+  <label for="userName">User Name:</label>
+  <input type="text" id="userName">
+  <br><br>
+
+  <label for="pass">Password:</label>
+  <input type="password" id="pass">
+  <br><br>
+
+  <button onclick="login()">Login</button>
+  <br><br>
+
+  <a href="/reg">אינך רשום? להרשמה לחץ כאן</a>
+</div>
+<div class="cursor-glow"></div>
 <script src="../script/login_script.js"></script>
 </body>
 </html>
