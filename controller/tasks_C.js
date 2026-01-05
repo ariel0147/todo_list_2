@@ -33,9 +33,13 @@ async function getOnetasks(req, res) {
 async function addtasks(req, res) {
     try {
         let text = req.body.text;
+
+        let categoryId = req.body.category_id || null;
         let userId = req.user.id;
 
-        let newTaskId = await add(text, userId);
+
+        let newTaskId = await add(text, userId, categoryId);
+
         if (!newTaskId) {
             return res.status(500).json({ message: "שגיאה בשמירת המשימה" });
         }

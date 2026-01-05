@@ -15,11 +15,16 @@ async function getOne(id, userId) {
 }
 
 
-async function add(text, userId) {
-    let sql = `INSERT INTO tasks (text, user_id) VALUES (?, ?)`;
-    let [result] = await db.query(sql, [text, userId]);
+
+
+async function add(text, userId, categoryId) { // הוספנו את categoryId
+
+    let sql = `INSERT INTO tasks (text, user_id, category_id) VALUES (?, ?, ?)`;
+    let [result] = await db.query(sql, [text, userId, categoryId]);
     return result.insertId;
 }
+
+
 
 
 async function deleteTaskFromDB(id, userId) {

@@ -1,9 +1,9 @@
-/* --- לוגיקה של דרקון מעופף עם "שדה כוח" מורחב --- */
+/* --- לוגיקה של דרקון מעופף --- */
 let mouseX = 0, mouseY = 0;
 let dragonX = 0, dragonY = 0;
 const speed = 0.08;
 const dragonSize = 160;
-const offset = dragonSize / 2; // הרדיוס של הדרקון (80px)
+const offset = dragonSize / 2;
 
 document.addEventListener('mousemove', function(e) {
     mouseX = e.clientX;
@@ -12,35 +12,27 @@ document.addEventListener('mousemove', function(e) {
 
 function animateDragon() {
     const dragon = document.querySelector('.cursor-glow');
-    // בוחר את האלמנטים שאסור לדרקון לגעת בהם
-    const forbiddenZones = document.querySelectorAll('.input, table');
+    // עדכנתי את הרשימה: הסרתי את .add-task-container כי הוא לא קיים יותר
+    const forbiddenZones = document.querySelectorAll('.input, table, .filter-container');
 
     if (dragon) {
         let targetX = mouseX;
         let targetY = mouseY;
 
-        // בדיקה עבור כל אזור אסור
         forbiddenZones.forEach(zone => {
             const rect = zone.getBoundingClientRect();
-
-            // יצירת "גדר" וירטואלית מסביב לאלמנט במרחק הרדיוס של הדרקון
-            // זה מבטיח שהדרקון יעצור *לפני* שהוא נוגע בקיר
             const limitLeft = rect.left - offset;
             const limitRight = rect.right + offset;
             const limitTop = rect.top - offset;
             const limitBottom = rect.bottom + offset;
 
-            // בדיקה: האם העכבר נמצא בתוך ה"גדר" הזו?
             if (mouseX > limitLeft && mouseX < limitRight &&
                 mouseY > limitTop && mouseY < limitBottom) {
 
-                // חישוב המרחק לכל אחד מהקירות של הגדר
                 const distLeft = mouseX - limitLeft;
                 const distRight = limitRight - mouseX;
                 const distTop = mouseY - limitTop;
                 const distBottom = limitBottom - mouseY;
-
-                // מציאת הקיר הקרוב ביותר והצמדת היעד אליו
                 const min = Math.min(distLeft, distRight, distTop, distBottom);
 
                 if (min === distLeft) targetX = limitLeft;
@@ -50,35 +42,63 @@ function animateDragon() {
             }
         });
 
-        // תנועה חלקה ליעד המחושב (העכבר או הגדר)
         dragonX += (targetX - dragonX) * speed;
         dragonY += (targetY - dragonY) * speed;
-
-        // חישוב זווית
         const dx = targetX - dragonX;
         const dy = targetY - dragonY;
         let angle = Math.atan2(dy, dx) * 180 / Math.PI;
-
-        // תיקון זווית (מותאם לתמונה שפונה שמאלה)
         angle = angle - 180;
-
-        // עדכון המיקום
         dragon.style.left = dragonX + 'px';
         dragon.style.top = dragonY + 'px';
         dragon.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     }
-
     requestAnimationFrame(animateDragon);
 }
-
 animateDragon();
-// --- לוגיקת המשימות ---
+
+
+/* --- לוגיקת המשימות והממשק --- */
+
+let allTasksData = [];
+let categoriesMap = {};
 
 let greating = "Hello ";
 if (localStorage.getItem('name')) {
     greating += localStorage.getItem('name');
 }
 document.getElementById('greating').innerHTML = greating;
+
+
+
+async function loadCategories() {
+    try {
+        let response = await fetch('/categories');
+        let data = await response.json();
+
+        if (response.status === 200 && data.categories) {
+            let filterSelect = document.getElementById('categoryFilter');
+
+
+            if(filterSelect) filterSelect.innerHTML = '<option value="all">הצג הכל</option>';
+
+            data.categories.forEach(cat => {
+
+                categoriesMap[cat.id] = cat.name;
+
+
+                if (filterSelect) {
+                    let optionFilter = document.createElement('option');
+                    optionFilter.value = cat.id;
+                    optionFilter.innerText = cat.name;
+                    filterSelect.appendChild(optionFilter);
+                }
+            });
+        }
+    } catch (err) {
+        console.error("Failed to load categories", err);
+    }
+}
+
 
 async function getTasks() {
     try {
@@ -89,14 +109,35 @@ async function getTasks() {
         }
         let data = await response.json();
         if (response.status == 400) {
-            alert(data.message);
+            allTasksData = [];
+            createTable([]);
+            if(data.message !== "אין לך משימות עדיין") alert(data.message);
             return;
         }
-        createTable(data.tasks);
+
+        allTasksData = data.tasks || [];
+        filterTasks();
+
     } catch (err) {
         console.error(err);
     }
 }
+
+
+function filterTasks() {
+    let filterElement = document.getElementById('categoryFilter');
+    if (!filterElement) return;
+
+    let categoryId = filterElement.value;
+
+    if (categoryId === "all") {
+        createTable(allTasksData);
+    } else {
+        let filteredTasks = allTasksData.filter(task => task.category_id == categoryId);
+        createTable(filteredTasks);
+    }
+}
+
 
 function createTable(data) {
     let txt = "";
@@ -106,10 +147,14 @@ function createTable(data) {
                 let isChecked = obj.is_done ? "checked" : "";
                 let rowClass = obj.is_done ? "class='rowClass'" : "";
 
+
+                let categoryName = categoriesMap[obj.category_id] ? categoriesMap[obj.category_id] : obj.category_id;
+                if (!categoryName) categoryName = "-";
+
                 txt += `<tr ${rowClass}>`;
                 txt += `<td><input type="checkbox" ${isChecked} onchange="taskDone(${obj.id}, this)"></td>`;
                 txt += `<td>${obj.text}</td>`;
-                txt += `<td>${obj.category_id}</td>`;
+                txt += `<td>${categoryName}</td>`;
                 txt += `<td><button onclick="deleteTask(${obj.id})">🗑️</button></td>`;
                 txt += `<td><button onclick="taskToEdit(${obj.id})">✏️</button></td>`;
                 txt += "</tr>";
@@ -124,6 +169,7 @@ function createTable(data) {
         tableElement.innerHTML = txt;
     }
 }
+
 
 async function taskDone(id, element) {
     let row = element.closest('tr');
@@ -146,11 +192,15 @@ async function taskDone(id, element) {
             element.checked = !element.checked;
             if(element.checked) row.classList.add('rowClass');
             else row.classList.remove('rowClass');
+        } else {
+            let task = allTasksData.find(t => t.id === id);
+            if (task) task.is_done = element.checked ? 1 : 0;
         }
     } catch (err) {
         console.error(err);
     }
 }
+
 
 async function deleteTask(id) {
     if (!confirm("האם למחוק את המשימה?")) return;
@@ -158,7 +208,8 @@ async function deleteTask(id) {
     try {
         let response = await fetch('/tasks/' + id, { method: 'DELETE' });
         if (response.status == 200) {
-            getTasks();
+            allTasksData = allTasksData.filter(t => t.id !== id);
+            filterTasks();
         } else {
             alert("שגיאה במחיקה");
         }
@@ -171,4 +222,8 @@ async function taskToEdit(id) {
     console.log("Edit task: " + id);
 }
 
-getTasks();
+
+(async function init() {
+    await loadCategories();
+    await getTasks();
+})();

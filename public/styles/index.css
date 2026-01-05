@@ -137,3 +137,39 @@ hr {
     pointer-events: none;
     z-index: 9999;
 }
+.filter-container {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.filter-container label {
+    font-size: 1.2rem;
+    margin-left: 10px;
+    color: #00d0ff;
+    text-shadow: 0 0 10px #00d0ff;
+}
+
+.filter-container select {
+    background-color: rgba(5, 12, 29, 0.8);
+    color: #00d0ff;
+    border: 2px solid #00d0ff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-family: inherit;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #00d0ff, inset 0 0 10px rgba(0, 208, 255, 0.2);
+    cursor: pointer;
+    outline: none;
+    transition: 0.3s;
+}
+
+.filter-container select:hover,
+.filter-container select:focus {
+    box-shadow: 0 0 20px #0091ff, inset 0 0 15px rgba(0, 145, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.filter-container select option {
+    background-color: #050c1d;
+    color: #e6f1ff;
+}
