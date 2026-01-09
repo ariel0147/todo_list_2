@@ -8,9 +8,14 @@
 </head>
 <body>
 <h1 id="greating"></h1>
-
+<a href="/cat">All categories</a>
 <hr>
-
+<div>
+    <input id="id" type="hidden">
+    <label for="text">Text:</label>
+    <input id="text">
+    <button onclick="addOrEdit()">Send</button>
+</div>
 <div class="filter-container">
     <label for="categoryFilter">סינון לפי קטגוריה:</label>
     <select id="categoryFilter" onchange="filterTasks()">

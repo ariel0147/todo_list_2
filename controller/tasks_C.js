@@ -67,29 +67,29 @@ async function deletetasks(req, res) {
     }
 }
 
-async function updatetasks(req, res) {
-    try {
-        let id = req.id;
+async function editTask(req,res) {
+    try{
+        let taskId = req.id;
         let userId = req.user.id;
-        let fieldsToUpdate = req.newTask;
+        let newTask = req.newTask;
 
-        let affectedRows = await update(id, userId, fieldsToUpdate);
-
-        if (affectedRows === 0) {
-            return res.status(404).json({ message: "לא ניתן לעדכן: המשימה לא נמצאה או שאינה שייכת לך" });
+        let affectedRows = await update(taskId,userId,newTask);
+        if(!affectedRows){
+            return res.status(400).json({message:`Task ${req.id} not found!`})
         }
-
-        res.status(200).json({ message: "המשימה עודכנה בהצלחה" });
-    } catch (err) {
+        res.status(200).json({message:"updated!"});
+    }catch(err){
         console.error(err);
-        res.status(500).json({ message: "Server error", error: err.message });
+
+        res.status(500).json({message:"Server error"})
     }
 }
+
 
 module.exports = {
     getAlltasks,
     getOnetasks,
     addtasks,
     deletetasks,
-    updatetasks
+    editTask
 };

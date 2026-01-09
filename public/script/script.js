@@ -218,8 +218,49 @@ async function deleteTask(id) {
     }
 }
 
-async function taskToEdit(id) {
-    console.log("Edit task: " + id);
+async function editTask(id) {
+    try {
+        let text = document.getElementById('text').value;
+        let response = await fetch(`/tasks/${id}`,{
+            method:'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({text})
+        })
+        getTasks();
+        document.getElementById('text').value = "";
+    } catch (err) {
+        alert(err)
+    }
+}
+
+function addOrEdit(){
+    let id = document.getElementById('id').value;
+    if(id){
+        editTask(id);
+    }else{
+        addTask();
+    }
+}
+
+async function addTask() {
+    try {
+        let text = document.getElementById('text').value;
+        console.log(text);
+
+        let catId = document.getElementById('mySelect').value;
+        if(catId == 0){
+            catId = null;
+        }
+        let response = await fetch('/tasks',{
+            method:'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({text,catId})
+        })
+        getTasks();
+        document.getElementById('text').value = "";
+    } catch (err) {
+        alert(err)
+    }
 }
 
 
