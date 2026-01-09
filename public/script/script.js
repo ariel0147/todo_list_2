@@ -242,7 +242,7 @@ function addOrEdit(){
     }
 }
 
-// public/script/script.js
+
 
 async function addTask() {
     try {
@@ -255,7 +255,7 @@ async function addTask() {
         let filterSelect = document.getElementById('categoryFilter');
         let category_id = null;
 
-        // אם נבחרה קטגוריה ספציפית
+
         if (filterSelect && filterSelect.value !== "all") {
             category_id = filterSelect.value;
         }
@@ -263,7 +263,7 @@ async function addTask() {
         let response = await fetch('/tasks', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text, category_id }) // שליחת השם המדויק
+            body: JSON.stringify({ text, category_id })
         });
 
         if (response.status === 201) {

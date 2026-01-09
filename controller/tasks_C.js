@@ -1,4 +1,4 @@
-// controller/tasks_C.js
+
 const { getAll, getOne, add, deleteTaskFromDB, update } = require('../model/tasks_M.js');
 
 async function getAlltasks(req, res) {
@@ -34,7 +34,7 @@ async function addtasks(req, res) {
     try {
         let text = req.body.text;
 
-        // המרה בטוחה למספר (או null אם אין קטגוריה)
+
         let categoryId = req.body.category_id ? parseInt(req.body.category_id) : null;
 
         let userId = req.user.id;
@@ -70,7 +70,7 @@ async function deletetasks(req, res) {
     }
 }
 
-// הפונקציה שהייתה חסרה לך
+
 async function editTask(req, res) {
     try {
         let taskId = req.id;
