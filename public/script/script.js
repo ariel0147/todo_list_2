@@ -242,27 +242,42 @@ function addOrEdit(){
     }
 }
 
+// public/script/script.js
+
 async function addTask() {
     try {
         let text = document.getElementById('text').value;
-        console.log(text);
-
-        let catId = document.getElementById('mySelect').value;
-        if(catId == 0){
-            catId = null;
+        if (!text) {
+            alert("נא לכתוב תוכן למשימה");
+            return;
         }
-        let response = await fetch('/tasks',{
-            method:'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({text,catId})
-        })
-        getTasks();
-        document.getElementById('text').value = "";
+
+        let filterSelect = document.getElementById('categoryFilter');
+        let category_id = null;
+
+        // אם נבחרה קטגוריה ספציפית
+        if (filterSelect && filterSelect.value !== "all") {
+            category_id = filterSelect.value;
+        }
+
+        let response = await fetch('/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text, category_id }) // שליחת השם המדויק
+        });
+
+        if (response.status === 201) {
+            await getTasks();
+            document.getElementById('text').value = "";
+        } else {
+            let data = await response.json();
+            alert(data.message || "שגיאה בהוספת משימה");
+        }
     } catch (err) {
-        alert(err)
+        console.error(err);
+        alert("שגיאה בתקשורת עם השרת");
     }
 }
-
 
 (async function init() {
     await loadCategories();

@@ -173,3 +173,58 @@ hr {
     background-color: #050c1d;
     color: #e6f1ff;
 }
+
+.add-task-container {
+    background-color: rgba(5, 12, 29, 0.8);
+    padding: 20px;
+    margin: 20px auto;
+    width: fit-content;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #0091ff, inset 0 0 20px rgba(0, 145, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+}
+
+.add-task-container label {
+    font-size: 1.2rem;
+    color: #00d0ff;
+    text-shadow: 0 0 5px #00d0ff;
+}
+
+.add-task-container input[type="text"] {
+    background: #050c1d;
+    border: 2px solid #0091ff;
+    color: #e6f1ff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 145, 255, 0.5);
+    transition: all 0.3s ease;
+    width: 300px;
+}
+
+.add-task-container input[type="text"]:focus {
+    border-color: #00d0ff;
+    box-shadow: 0 0 15px #00d0ff;
+}
+
+.add-task-container button {
+    background: transparent;
+    border: 2px solid #00d0ff;
+    color: #00d0ff;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    box-shadow: 0 0 10px #00d0ff;
+    transition: all 0.3s ease;
+}
+
+.add-task-container button:hover {
+    background: #00d0ff;
+    color: #050c1d;
+    box-shadow: 0 0 20px #00d0ff, 0 0 40px #0091ff;
+    transform: scale(1.05);
+}

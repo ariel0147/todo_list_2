@@ -1,4 +1,4 @@
-
+// controller/tasks_C.js
 const { getAll, getOne, add, deleteTaskFromDB, update } = require('../model/tasks_M.js');
 
 async function getAlltasks(req, res) {
@@ -34,9 +34,12 @@ async function addtasks(req, res) {
     try {
         let text = req.body.text;
 
-        let categoryId = req.body.category_id || null;
+        // המרה בטוחה למספר (או null אם אין קטגוריה)
+        let categoryId = req.body.category_id ? parseInt(req.body.category_id) : null;
+
         let userId = req.user.id;
 
+        console.log(`Trying to add task: Text="${text}", CategoryID=${categoryId}, UserID=${userId}`);
 
         let newTaskId = await add(text, userId, categoryId);
 
@@ -46,8 +49,8 @@ async function addtasks(req, res) {
 
         res.status(201).json({ message: "המשימה נוספה בהצלחה", id: newTaskId });
     } catch (err) {
-        console.error("Error adding task:", err);
-        res.status(500).json({ message: "Server error" });
+        console.error("❌ Error adding task:", err);
+        res.status(500).json({ message: "Server error", error: err.message });
     }
 }
 
@@ -67,24 +70,23 @@ async function deletetasks(req, res) {
     }
 }
 
-async function editTask(req,res) {
-    try{
+// הפונקציה שהייתה חסרה לך
+async function editTask(req, res) {
+    try {
         let taskId = req.id;
         let userId = req.user.id;
         let newTask = req.newTask;
 
-        let affectedRows = await update(taskId,userId,newTask);
-        if(!affectedRows){
-            return res.status(400).json({message:`Task ${req.id} not found!`})
+        let affectedRows = await update(taskId, userId, newTask);
+        if (!affectedRows) {
+            return res.status(400).json({ message: `Task ${req.id} not found!` });
         }
-        res.status(200).json({message:"updated!"});
-    }catch(err){
+        res.status(200).json({ message: "updated!" });
+    } catch (err) {
         console.error(err);
-
-        res.status(500).json({message:"Server error"})
+        res.status(500).json({ message: "Server error" });
     }
 }
-
 
 module.exports = {
     getAlltasks,
