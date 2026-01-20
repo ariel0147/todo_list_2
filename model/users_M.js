@@ -1,10 +1,8 @@
 const db = require("../config/db_config");
 
 async function getAll(){
-    let sql = `SELECT id,name,email FROM users`;
-    console.log(sql);
+    let sql = `SELECT id, name, email, userName FROM users`;
     let [rows] = await db.query(sql);
-    console.log(rows);
     return rows;
 }
 
