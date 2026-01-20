@@ -221,15 +221,24 @@ async function deleteTask(id) {
 async function editTask(id) {
     try {
         let text = document.getElementById('text').value;
-        let response = await fetch(`/tasks/${id}`,{
-            method:'PATCH',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({text})
-        })
-        getTasks();
-        document.getElementById('text').value = "";
+
+        let response = await fetch(`/tasks/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text })
+        });
+
+        if (response.ok) {
+            await getTasks();
+
+
+            document.getElementById('text').value = "";
+            document.getElementById('id').value = "";
+        } else {
+            alert("שגיאה בעדכון המשימה");
+        }
     } catch (err) {
-        alert(err)
+        alert(err);
     }
 }
 
@@ -278,6 +287,15 @@ async function addTask() {
         alert("שגיאה בתקשורת עם השרת");
     }
 }
+function taskToEdit(id) {
+    let task = allTasksData.find(t => t.id === id);
+
+    if (task) {
+        document.getElementById('text').value = task.text;
+        document.getElementById('id').value = task.id;
+    }
+}
+
 
 (async function init() {
     await loadCategories();
