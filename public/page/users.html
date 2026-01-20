@@ -2,9 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול משתמשים</title>
+    <link rel="stylesheet" href="../styles/index.css">
 </head>
 <body>
-<h1>שלום משתמשים</h1>
+<h1>ניהול משתמשים</h1>
+<a href="/home">חזרה למשימות</a>
+<hr>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>שם</th>
+        <th>אימייל</th>
+        <th>שם משתמש</th>
+        <th>פעולות</th>
+    </tr>
+    </thead>
+    <tbody id="usersTable">
+    </tbody>
+</table>
+
+<div class="cursor-glow"></div>
+<script src="../script/users_script.js"></script>
 </body>
 </html>
