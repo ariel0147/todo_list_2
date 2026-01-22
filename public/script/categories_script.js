@@ -1,8 +1,6 @@
 const categoriesTable = document.getElementById('categoriesTable');
 
-// =========================================================
-// 1. לוגיקת עיצוב עכבר (Cursor Glow)
-// =========================================================
+
 const cursor = document.querySelector('.cursor-glow');
 
 document.addEventListener('mousemove', function(e) {
@@ -12,15 +10,13 @@ document.addEventListener('mousemove', function(e) {
     }
 });
 
-// =========================================================
-// 2. טעינה ותצוגה (READ)
-// =========================================================
+
 async function loadCategories() {
     try {
-        // שליחת בקשה לנתיב שהגדרנו ב-routes/categories_R.js
+
         const res = await fetch('/categories');
 
-        // אם המשתמש לא מחובר, זרוק אותו ללוגין
+
         if (res.status === 401) {
             window.location.href = "/login";
             return;
@@ -32,7 +28,7 @@ async function loadCategories() {
             renderTable(data.categories);
         } else {
             console.error(data.message);
-            // אם אין קטגוריות או יש שגיאה, נציג טבלה ריקה
+
             renderTable([]);
         }
     } catch (err) {
@@ -61,5 +57,40 @@ function renderTable(categories) {
     categoriesTable.innerHTML = html;
 }
 
-// הפעלת הטעינה בעת טעינת הדף
+async function addCategory() {
+    const nameInput = document.getElementById('categoryName');
+    const name = nameInput.value;
+
+
+    if (!name) {
+        alert("נא להזין שם לקטגוריה");
+        return;
+    }
+
+    try {
+
+        const res = await fetch('/categories', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name })
+        });
+
+        const data = await res.json();
+
+        if (res.status === 201) {
+
+            alert(data.message);
+            nameInput.value = '';
+            loadCategories();
+        } else {
+
+            alert(data.message || "שגיאה בהוספת הקטגוריה");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("שגיאה בתקשורת עם השרת");
+    }
+}
+
+
 loadCategories();
