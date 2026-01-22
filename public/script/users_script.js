@@ -1,16 +1,18 @@
-
 const usersTable = document.getElementById('usersTable');
 
 async function loadUsers() {
     try {
         const res = await fetch('/users');
+        if (res.status === 401) {
+            window.location.href = "/login";
+            return;
+        }
         const data = await res.json();
 
         if (res.ok) {
             renderTable(data.users);
         } else {
-            if (res.status === 401) window.location.href = "/login";
-            else console.error(data.message);
+            console.error(data.message);
         }
     } catch (err) {
         console.error(err);
@@ -28,8 +30,8 @@ function renderTable(users) {
                     <td>${user.email}</td>
                     <td>${user.userName}</td>
                     <td>
-                        <button>🗑️</button> 
-                        <button>✏️</button>
+                        <button onclick="deleteUser(${user.id})">🗑️</button> 
+                        <button onclick="editUser(${user.id})">✏️</button>
                     </td>
                 </tr>
             `;
@@ -38,6 +40,35 @@ function renderTable(users) {
         html = '<tr><td colspan="5">לא נמצאו משתמשים</td></tr>';
     }
     usersTable.innerHTML = html;
+}
+
+async function deleteUser(id) {
+
+    if (!confirm("האם אתה בטוח שברצונך למחוק משתמש זה?")) {
+        return;
+    }
+
+    try {
+        let response = await fetch('/users/' + id, {
+            method: 'DELETE'
+        });
+
+        if (response.status === 200) {
+
+            loadUsers();
+        } else {
+            let data = await response.json();
+            alert(data.message || "שגיאה במחיקת המשתמש");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("שגיאה בתקשורת עם השרת");
+    }
+}
+
+
+function editUser(id) {
+    alert("פונקציונליות עריכה תתווסף בשלב הבא (" + id + ")");
 }
 
 loadUsers();
