@@ -2,9 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול קטגוריות</title>
+    <link rel="stylesheet" href="../styles/index.css">
 </head>
 <body>
-<h1>שלום קטגרויות</h1>
+<h1>ניהול קטגוריות</h1>
+<a href="/home">חזרה למשימות</a>
+<hr>
+
+<div class="add-task-container">
+    <label for="categoryName">קטגוריה חדשה:</label>
+    <input id="categoryName" type="text" placeholder="שם הקטגוריה...">
+    <button onclick="addCategory()">הוסף</button>
+</div>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>שם קטגוריה</th>
+        <th>פעולות</th>
+    </tr>
+    </thead>
+    <tbody id="categoriesTable">
+    </tbody>
+</table>
+
+<div class="cursor-glow"></div>
+<script src="../script/categories_script.js"></script>
 </body>
 </html>
