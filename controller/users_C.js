@@ -1,4 +1,4 @@
-// controller/users_C.js
+
 const { getAll, getOne, deleteUserFromDB,update} = require('../model/users_M.js');
 
 

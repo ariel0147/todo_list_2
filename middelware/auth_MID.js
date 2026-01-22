@@ -39,8 +39,8 @@ function isLoggedIn(req, res, next) {
     }
     try {
         const payload = jwt.verify(token, process.env.SECRET_KEY);
-        req.user = payload; // שומר את המידע להמשך
-        next(); // אם הכול תקין → המשך
+        req.user = payload;
+        next();
     } catch (err) {
         console.error(err);
         return res.status(403).json({ message: "טוקן לא תקין" });
