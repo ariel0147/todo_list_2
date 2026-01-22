@@ -1,3 +1,4 @@
+
 const usersTable = document.getElementById('usersTable');
 
 async function loadUsers() {
@@ -40,3 +41,13 @@ function renderTable(users) {
 }
 
 loadUsers();
+
+
+const cursor = document.querySelector('.cursor-glow');
+
+document.addEventListener('mousemove', function(e) {
+    if (cursor) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    }
+});

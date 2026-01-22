@@ -1,63 +1,16 @@
-/* --- לוגיקה של דרקון מעופף --- */
-let mouseX = 0, mouseY = 0;
-let dragonX = 0, dragonY = 0;
-const speed = 0.08;
-const dragonSize = 160;
-const offset = dragonSize / 2;
+
+const cursor = document.querySelector('.cursor-glow');
+
 
 document.addEventListener('mousemove', function(e) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    if (cursor) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    }
 });
 
-function animateDragon() {
-    const dragon = document.querySelector('.cursor-glow');
-    // עדכנתי את הרשימה: הסרתי את .add-task-container כי הוא לא קיים יותר
-    const forbiddenZones = document.querySelectorAll('.input, table, .filter-container');
-
-    if (dragon) {
-        let targetX = mouseX;
-        let targetY = mouseY;
-
-        forbiddenZones.forEach(zone => {
-            const rect = zone.getBoundingClientRect();
-            const limitLeft = rect.left - offset;
-            const limitRight = rect.right + offset;
-            const limitTop = rect.top - offset;
-            const limitBottom = rect.bottom + offset;
-
-            if (mouseX > limitLeft && mouseX < limitRight &&
-                mouseY > limitTop && mouseY < limitBottom) {
-
-                const distLeft = mouseX - limitLeft;
-                const distRight = limitRight - mouseX;
-                const distTop = mouseY - limitTop;
-                const distBottom = limitBottom - mouseY;
-                const min = Math.min(distLeft, distRight, distTop, distBottom);
-
-                if (min === distLeft) targetX = limitLeft;
-                else if (min === distRight) targetX = limitRight;
-                else if (min === distTop) targetY = limitTop;
-                else if (min === distBottom) targetY = limitBottom;
-            }
-        });
-
-        dragonX += (targetX - dragonX) * speed;
-        dragonY += (targetY - dragonY) * speed;
-        const dx = targetX - dragonX;
-        const dy = targetY - dragonY;
-        let angle = Math.atan2(dy, dx) * 180 / Math.PI;
-        angle = angle - 180;
-        dragon.style.left = dragonX + 'px';
-        dragon.style.top = dragonY + 'px';
-        dragon.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-    }
-    requestAnimationFrame(animateDragon);
-}
-animateDragon();
 
 
-/* --- לוגיקת המשימות והממשק --- */
 
 let allTasksData = [];
 let categoriesMap = {};
@@ -68,8 +21,6 @@ if (localStorage.getItem('name')) {
 }
 document.getElementById('greating').innerHTML = greating;
 
-
-
 async function loadCategories() {
     try {
         let response = await fetch('/categories');
@@ -78,13 +29,10 @@ async function loadCategories() {
         if (response.status === 200 && data.categories) {
             let filterSelect = document.getElementById('categoryFilter');
 
-
             if(filterSelect) filterSelect.innerHTML = '<option value="all">הצג הכל</option>';
 
             data.categories.forEach(cat => {
-
                 categoriesMap[cat.id] = cat.name;
-
 
                 if (filterSelect) {
                     let optionFilter = document.createElement('option');
@@ -98,7 +46,6 @@ async function loadCategories() {
         console.error("Failed to load categories", err);
     }
 }
-
 
 async function getTasks() {
     try {
@@ -123,7 +70,6 @@ async function getTasks() {
     }
 }
 
-
 function filterTasks() {
     let filterElement = document.getElementById('categoryFilter');
     if (!filterElement) return;
@@ -138,7 +84,6 @@ function filterTasks() {
     }
 }
 
-
 function createTable(data) {
     let txt = "";
     if (data && data.length > 0) {
@@ -146,7 +91,6 @@ function createTable(data) {
             if (obj) {
                 let isChecked = obj.is_done ? "checked" : "";
                 let rowClass = obj.is_done ? "class='rowClass'" : "";
-
 
                 let categoryName = categoriesMap[obj.category_id] ? categoriesMap[obj.category_id] : obj.category_id;
                 if (!categoryName) categoryName = "-";
@@ -169,7 +113,6 @@ function createTable(data) {
         tableElement.innerHTML = txt;
     }
 }
-
 
 async function taskDone(id, element) {
     let row = element.closest('tr');
@@ -201,7 +144,6 @@ async function taskDone(id, element) {
     }
 }
 
-
 async function deleteTask(id) {
     if (!confirm("האם למחוק את המשימה?")) return;
 
@@ -230,8 +172,6 @@ async function editTask(id) {
 
         if (response.ok) {
             await getTasks();
-
-
             document.getElementById('text').value = "";
             document.getElementById('id').value = "";
         } else {
@@ -251,8 +191,6 @@ function addOrEdit(){
     }
 }
 
-
-
 async function addTask() {
     try {
         let text = document.getElementById('text').value;
@@ -263,7 +201,6 @@ async function addTask() {
 
         let filterSelect = document.getElementById('categoryFilter');
         let category_id = null;
-
 
         if (filterSelect && filterSelect.value !== "all") {
             category_id = filterSelect.value;
@@ -287,6 +224,7 @@ async function addTask() {
         alert("שגיאה בתקשורת עם השרת");
     }
 }
+
 function taskToEdit(id) {
     let task = allTasksData.find(t => t.id === id);
 
@@ -295,7 +233,6 @@ function taskToEdit(id) {
         document.getElementById('id').value = task.id;
     }
 }
-
 
 (async function init() {
     await loadCategories();
