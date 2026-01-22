@@ -43,9 +43,11 @@ async function deleteUser(req, res) {
 
 async function updateUser(req,res) {
     try{
-        let affectedRows = await update(req.id,req.user);
+
+        let affectedRows = await update(req.params.id, req.user);
+
         if(!affectedRows){
-            return res.status(400).json({message:`User ${req.id} not found!`})
+            return res.status(400).json({message:`User ${req.params.id} not found!`})
         }
         res.status(200).json({message:"updated!"});
     }catch(err){
