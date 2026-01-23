@@ -1,242 +1,254 @@
-
+/* =========================================
+   Global Reset & Font
+   ========================================= */
 * {
-    cursor: none !important;
+    box-sizing: border-box;
 }
+
 body {
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
     text-align: center;
-    background: #050c1d;
+    background: radial-gradient(circle at top center, #1b2735 0%, #090a0f 100%);
     color: #e6f1ff;
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: 'Heebo', "Segoe UI", Arial, sans-serif;
     direction: rtl;
-
-
+    min-height: 100vh;
+    overflow-x: hidden;
     cursor: none;
 }
-
 
 a, button, input, select, table, th, td {
     cursor: none;
 }
 
+/* =========================================
+   Typography & Headings
+   ========================================= */
 h1 {
-    text-align: center;
     font-size: 3rem;
-    color: #00d0ff;
-    text-shadow:
-            0 0 10px #00d0ff,
-            0 0 20px #0091ff,
-            0 0 40px #0091ff;
-    padding-bottom: 6px;
-    border-bottom: 2px solid #00d0ff;
-    box-shadow:
-            0 4px 10px -2px #00d0ff,
-            0 4px 20px -2px #0091ff;
-    padding-left: 20px;
-    padding-right: 20px;
-    display: inline-block;
-    margin-bottom: 30px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 30px 0 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 208, 255, 0.8),
+    0 0 20px rgba(0, 208, 255, 0.4);
 }
 
-
-table {
-    width: 80%;
-    margin: 40px auto;
-    border-collapse: collapse;
-    background-color: rgba(5, 12, 29, 0.5);
-    box-shadow:
-            0 0 15px #0091ff,
-            inset 0 0 20px rgba(0, 145, 255, 0.2);
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-th {
-    padding: 20px;
-    font-size: 1.2rem;
-    color: #00d0ff;
-    text-shadow: 0 0 8px #00d0ff;
-    border-bottom: 2px solid #0091ff;
-    background-color: rgba(0, 145, 255, 0.1);
-}
-
-td {
-    padding: 15px;
-    border-bottom: 1px solid rgba(0, 208, 255, 0.2);
-    color: #e6f1ff;
-    transition: background-color 0.3s ease;
-}
-
-tr:hover td {
-    background-color: rgba(0, 208, 255, 0.15);
-}
-
-
-.rowClass td:nth-child(2),
-.rowClass td:nth-child(3) {
-    text-decoration: line-through;
-    color: #5d7a99;
-    opacity: 0.7;
+a {
+    color: #8892b0;
+    text-decoration: none;
+    font-size: 1rem;
+    margin: 0 15px;
+    font-weight: 500;
     transition: all 0.3s ease;
 }
 
-.rowClass td button,
-.rowClass td input {
-    opacity: 1;
-    text-decoration: none;
-}
-
-
-button {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    transition: transform 0.2s ease, text-shadow 0.2s ease;
-}
-
-button:hover {
-    transform: scale(1.3);
-    filter: drop-shadow(0 0 5px #00d0ff);
-}
-
-input[type="checkbox"] {
-    transform: scale(1.5);
-    accent-color: #00d0ff;
+a:hover {
+    color: #00d0ff;
+    text-shadow: 0 0 8px rgba(0, 208, 255, 0.6);
 }
 
 hr {
     border: 0;
     height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 208, 255, 0.75), rgba(0, 0, 0, 0));
-    margin-bottom: 20px;
-}
-
-.filter-container {
+    background: linear-gradient(90deg, transparent, rgba(0, 208, 255, 0.5), transparent);
     margin: 20px auto;
-    text-align: center;
+    width: 60%; /* קו מפריד קצר יותר */
 }
 
-.filter-container label {
-    font-size: 1.2rem;
-    margin-left: 10px;
-    color: #00d0ff;
-    text-shadow: 0 0 10px #00d0ff;
-}
+/* =========================================
+   Forms & Containers
+   ========================================= */
+.add-task-container, .filter-container {
+    background: rgba(22, 33, 62, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 
-.filter-container select {
-    background-color: rgba(5, 12, 29, 0.8);
-    color: #00d0ff;
-    border: 2px solid #00d0ff;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-family: inherit;
-    border-radius: 5px;
-    box-shadow: 0 0 10px #00d0ff, inset 0 0 10px rgba(0, 208, 255, 0.2);
-    outline: none;
-    transition: 0.3s;
-}
-
-.filter-container select:hover,
-.filter-container select:focus {
-    box-shadow: 0 0 20px #0091ff, inset 0 0 15px rgba(0, 145, 255, 0.4);
-    transform: scale(1.05);
-}
-
-.filter-container select option {
-    background-color: #050c1d;
-    color: #e6f1ff;
-}
-
-.add-task-container {
-    background-color: rgba(5, 12, 29, 0.8);
-    padding: 20px;
+    padding: 20px 40px; /* הקטנתי קצת את הריפוד */
     margin: 20px auto;
     width: fit-content;
-    border-radius: 15px;
-    box-shadow: 0 0 15px #0091ff, inset 0 0 20px rgba(0, 145, 255, 0.2);
+    border-radius: 16px;
+
     display: flex;
     align-items: center;
-    gap: 15px;
     justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
-.add-task-container label {
-    font-size: 1.2rem;
-    color: #00d0ff;
-    text-shadow: 0 0 5px #00d0ff;
-}
-
-.add-task-container input[type="text"] {
-    background: #050c1d;
-    border: 2px solid #0091ff;
-    color: #e6f1ff;
-    padding: 10px;
-    border-radius: 5px;
+label {
     font-size: 1rem;
+    color: #ccd6f6;
+    font-weight: 500;
+}
+
+input[type="text"], select {
+    background: rgba(10, 25, 47, 0.8);
+    border: 1px solid rgba(0, 208, 255, 0.2);
+    color: #e6f1ff;
+    padding: 10px 20px; /* שדות קצת יותר נמוכים */
+    border-radius: 10px;
+    font-size: 0.95rem;
     outline: none;
-    box-shadow: 0 0 5px rgba(0, 145, 255, 0.5);
+    width: 280px; /* שדה קצת יותר צר */
+    font-family: inherit;
     transition: all 0.3s ease;
-    width: 300px;
 }
 
-.add-task-container input[type="text"]:focus {
+input[type="text"]:focus, select:focus {
     border-color: #00d0ff;
-    box-shadow: 0 0 15px #00d0ff;
+    background: rgba(10, 25, 47, 1);
+    box-shadow: 0 0 15px rgba(0, 208, 255, 0.3);
 }
 
-.add-task-container button {
-    background: transparent;
-    border: 2px solid #00d0ff;
+button {
+    background: linear-gradient(145deg, rgba(0, 208, 255, 0.1), transparent);
+    border: 1px solid #00d0ff;
     color: #00d0ff;
-    padding: 8px 20px;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    box-shadow: 0 0 10px #00d0ff;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
     transition: all 0.3s ease;
+    cursor: none;
 }
 
-.add-task-container button:hover {
+button:hover {
     background: #00d0ff;
-    color: #050c1d;
-    box-shadow: 0 0 20px #00d0ff, 0 0 40px #0091ff;
-    transform: scale(1.05);
+    color: #0b1120;
+    box-shadow: 0 0 20px rgba(0, 208, 255, 0.5);
+    transform: translateY(-2px);
 }
 
+/* =========================================
+   Table Styling - גרסה מהודקת
+   ========================================= */
+table {
+    width: 75%; /* הקטנתי מ-90% ל-75% */
+    max-width: 1000px; /* הגבלה שלא תהיה ענקית במסכים גדולים */
+    margin: 30px auto;
+    border-collapse: separate;
+    border-spacing: 0 10px; /* צמצום הרווח בין השורות */
+}
+
+thead th {
+    color: #64ffda;
+    font-size: 1.1rem;
+    padding: 15px; /* פחות ריפוד */
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border-bottom: 2px solid rgba(100, 255, 218, 0.2);
+}
+
+tbody tr {
+    background: rgba(23, 42, 69, 0.95);
+    box-shadow: 0 5px 15px -5px rgba(0,0,0,0.5);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+tbody tr td:first-child {
+    border-right: 4px solid #00d0ff;
+    border-radius: 0 8px 8px 0;
+}
+tbody tr td:last-child {
+    border-radius: 8px 0 0 8px;
+}
+
+tbody tr:hover {
+    transform: scale(1.01); /* הגדלה עדינה יותר */
+    background: #233554;
+    z-index: 10;
+}
+
+td {
+    padding: 12px 15px; /* הקטנה משמעותית של הגובה (היה 20px) */
+    font-size: 1rem;
+    color: #ccd6f6;
+    vertical-align: middle;
+}
+
+td:nth-child(2) {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+td button {
+    border: none;
+    background: transparent;
+    font-size: 1.2rem;
+    padding: 4px;
+    margin: 0 5px;
+}
+
+td button:hover {
+    background: transparent;
+    box-shadow: none;
+    transform: scale(1.2);
+}
+
+/* =========================================
+   Task States & Cursor
+   ========================================= */
+input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #64ffda;
+    border-radius: 5px;
+    background: rgba(10, 25, 47, 0.5);
+    cursor: none;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+    background: #64ffda;
+}
+
+input[type="checkbox"]:checked::after {
+    content: '✔';
+    position: absolute;
+    top: -3px; left: 3px;
+    font-size: 14px;
+    color: #020c1b;
+    font-weight: 900;
+}
+
+.rowClass {
+    opacity: 0.5;
+    transform: scale(0.98);
+}
+
+.rowClass td {
+    text-decoration: line-through;
+    color: #8892b0;
+}
 
 .cursor-glow {
     width: 30px;
     height: 30px;
+    border: 2px solid #64ffda;
+    border-radius: 50%;
     position: fixed;
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
-
-
-    opacity: 1;
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.4);
+    transition: width 0.1s, height 0.1s; /* תגובה מהירה יותר */
+    background: rgba(100, 255, 218, 0.05);
 }
-
-
-.cursor-glow::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 100%;
-    background-color: #00d0ff;
-    box-shadow: 0 0 8px #00d0ff, 0 0 15px #00d0ff;
-}
-
 
 .cursor-glow::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    width: 100%;
-    height: 2px;
-    background-color: #00d0ff;
-    box-shadow: 0 0 8px #00d0ff, 0 0 15px #00d0ff;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px; height: 6px;
+    background: #64ffda;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #64ffda;
 }
