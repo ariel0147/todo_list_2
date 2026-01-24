@@ -2,14 +2,26 @@
 const { getAll, getOne, deleteUserFromDB,update} = require('../model/users_M.js');
 
 
-async function getAllUsers(req,res){
+async function getAllUsers(req, res) {
     try {
-        let users = await getAll();
-        if(users.length === 0){
-            return res.status(400).json({ message: "No users found." });
+        let users = [];
+        if (req.user.is_admin) {
+            users = await getAll();
+        } else {
+
+            const myUser = await getOne(req.user.id);
+            if (myUser) {
+                users = [myUser];
+            }
         }
+
+        if (users.length === 0) {
+            return res.status(200).json({ message: "לא נמצאו משתמשים", users: [] });
+        }
+
         res.status(200).json({ message: "ok", users });
-    } catch(err){
+    } catch (err) {
+        console.error(err);
         res.status(500).json({ message: "Server error", error: err.message });
     }
 }

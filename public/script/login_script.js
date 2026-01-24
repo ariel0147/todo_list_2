@@ -13,7 +13,7 @@ async function login() {
             let data = await response.json();
             if (response.status == 200) {
                 localStorage.setItem('name', data.name);
-
+                localStorage.setItem('is_admin', data.is_admin);
                 window.location.href = '/home';
                 return;
             }

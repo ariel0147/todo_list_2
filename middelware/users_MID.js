@@ -10,9 +10,9 @@ function isValidid(req,res,next){
 
 function valuesToEdit(req,res,next){
     let obj = {};
-   if(req.body.name){
-       obj.name = req.body.name;
-   }
+    if(req.body.name){
+        obj.name = req.body.name;
+    }
     if(req.body.email){
         obj.email = req.body.email;
     }
@@ -28,9 +28,23 @@ function valuesToEdit(req,res,next){
     next();
 }
 
+function checkPermissions(req, res, next) {
+    const requesterId = req.user.id;
+
+    const requesterIsAdmin = req.user.is_admin;
+
+    const targetId = parseInt(req.params.id);
+
+    if (requesterIsAdmin || requesterId === targetId) {
+        next();
+    } else {
+        res.status(403).json({ message: "אין לך הרשאה לבצע שינויים במשתמש זה" });
+    }
+}
 
 
 module.exports = {
-     isValidid,
+    isValidid,
     valuesToEdit
- };
+    ,checkPermissions
+};

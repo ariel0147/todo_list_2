@@ -23,9 +23,19 @@ async function loadUsers() {
 }
 
 function renderTable(users) {
+
+    const isAdmin = localStorage.getItem('is_admin') == '1';
+
     let html = '';
     if (users && users.length > 0) {
         users.forEach(user => {
+
+
+            let deleteButtonHTML = '';
+            if (isAdmin) {
+                deleteButtonHTML = `<button class="action-btn" onclick="deleteUser(${user.id})">🗑️</button>`;
+            }
+
             html += `
                 <tr id="row-${user.id}">
                     <td>${user.id}</td>
@@ -33,8 +43,7 @@ function renderTable(users) {
                     <td class="email-cell">${user.email}</td>
                     <td class="username-cell">${user.userName}</td>
                     <td>
-                        <button class="action-btn" onclick="deleteUser(${user.id})">🗑️</button> 
-                        <button class="action-btn" onclick="editUser(${user.id})">✏️</button>
+                        ${deleteButtonHTML}  <button class="action-btn" onclick="editUser(${user.id})">✏️</button>
                     </td>
                 </tr>
             `;
@@ -42,7 +51,10 @@ function renderTable(users) {
     } else {
         html = '<tr><td colspan="5">לא נמצאו משתמשים</td></tr>';
     }
-    usersTable.innerHTML = html;
+
+    if (usersTable) {
+        usersTable.innerHTML = html;
+    }
 }
 
 async function deleteUser(id) {
@@ -134,3 +146,19 @@ document.addEventListener('mousemove', function(e) {
         cursor.style.top = e.clientY + 'px';
     }
 });
+async function logout() {
+    try {
+        const res = await fetch('/auth/logout', {
+            method: 'POST'
+        });
+
+        if (res.ok) {
+            localStorage.removeItem('name');
+            window.location.href = '/login';
+        } else {
+            alert("שגיאה בהתנתקות");
+        }
+    } catch (err) {
+        console.error("Error logging out:", err);
+    }
+}

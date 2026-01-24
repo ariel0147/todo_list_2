@@ -1,6 +1,4 @@
-/* =========================================
-   Login & Registration Styles - Premium
-   ========================================= */
+
 * {
     box-sizing: border-box;
 }
@@ -24,14 +22,14 @@ input, button, a {
     cursor: none;
 }
 
-/* הקונטיינר המרחף */
+
 .container, form {
-    background: rgba(22, 33, 62, 0.6); /* קצת יותר שקיפות */
+    background: rgba(22, 33, 62, 0.6);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 
     border: 1px solid rgba(255, 255, 255, 0.1);
-    /* צל חזק יותר לתחושת עומק */
+
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6),
     inset 0 0 20px rgba(255, 255, 255, 0.05);
 
@@ -43,27 +41,22 @@ input, button, a {
     position: relative;
 }
 
-/* === כותרת מעוצבת ומושקעת === */
 h1 {
     font-size: 3rem;
     font-weight: 800;
     margin-bottom: 30px;
     margin-top: 0;
-
-    /* גרדיאנט בתוך הטקסט */
     background: linear-gradient(135deg, #ffffff 0%, #00d0ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-
-    /* צל זוהר מסביב */
     filter: drop-shadow(0 0 15px rgba(0, 208, 255, 0.5));
 
     letter-spacing: 1px;
     text-transform: uppercase;
 }
 
-/* קו עדין מתחת לכותרת */
+
 h1::after {
     content: '';
     display: block;
@@ -75,7 +68,7 @@ h1::after {
     box-shadow: 0 0 10px #00d0ff;
 }
 
-/* שדות קלט */
+
 input[type="text"],
 input[type="password"],
 input[type="email"] {
@@ -98,7 +91,6 @@ input:focus {
     transform: scale(1.02);
 }
 
-/* כפתור */
 button {
     width: 100%;
     padding: 14px;
@@ -121,7 +113,7 @@ button:hover {
     transform: translateY(-3px);
 }
 
-/* קישורים */
+
 a {
     display: block;
     margin-top: 25px;
@@ -137,7 +129,7 @@ a:hover {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
-/* סמן */
+
 .cursor-glow {
     width: 30px;
     height: 30px;

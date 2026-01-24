@@ -165,6 +165,22 @@ async function saveCategory(id) {
         alert("שגיאה בתקשורת");
     }
 }
+async function logout() {
+    try {
+        const res = await fetch('/auth/logout', {
+            method: 'POST'
+        });
+
+        if (res.ok) {
+            localStorage.removeItem('name');
+            window.location.href = '/login';
+        } else {
+            alert("שגיאה בהתנתקות");
+        }
+    } catch (err) {
+        console.error("Error logging out:", err);
+    }
+}
 
 
 loadCategories();

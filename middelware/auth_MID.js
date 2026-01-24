@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// בדיקה אם כל הערכים קיימים
+
 function valuesToAdd(req, res, next) {
     const { name, email, pass, userName } = req.body;
     if (!name || !email || !pass || !userName) {
@@ -11,7 +11,7 @@ function valuesToAdd(req, res, next) {
 }
 
 function valuesToLogin(req, res, next) {
-   let { pass, userName } = req.body;
+    let { pass, userName } = req.body;
     if (  !pass || !userName) {
         return res.status(400).send({ error: "חסרים נתונים" });
     }

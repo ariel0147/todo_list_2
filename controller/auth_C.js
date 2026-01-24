@@ -51,19 +51,30 @@ async function createJwt(req,res) {
     try{
         let user = req.user;
         let token = await jwt.sign(
-            {id:user.id,name:user.name},
+            {id:user.id,name:user.name ,is_admin: user.is_admin},
             process.env.SECRET_KEY,
             {expiresIn:'3h'}
         );
-        res.cookie('jwt',token,{maxAge:1000*60*60*3}).status(200).json({message:"התחברת בהצלחה",name:user.name});
+        res.cookie('jwt',token,{maxAge:1000*60*60*3}).status(200).json({message:"התחברת בהצלחה",name:user.name,is_admin: user.is_admin});
     }catch(err){
         console.error(err);
         res.status(500).json({message:"Server error"});
+    }
+}
+async function logout(req, res) {
+    try {
+
+        res.clearCookie('jwt');
+        res.status(200).json({ message: "התנתקת בהצלחה" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
     }
 }
 
 module.exports ={
     register,
     login,
-    createJwt
+    createJwt,
+    logout
 }

@@ -15,7 +15,7 @@ document.addEventListener('mousemove', function(e) {
 let allTasksData = [];
 let categoriesMap = {};
 
-let greating = "Hello ";
+let greating = "שלום ";
 if (localStorage.getItem('name')) {
     greating += localStorage.getItem('name');
 }
@@ -233,6 +233,25 @@ function taskToEdit(id) {
         document.getElementById('id').value = task.id;
     }
 }
+async function logout() {
+    try {
+        const res = await fetch('/auth/logout', {
+            method: 'POST'
+        });
+
+        if (res.ok) {
+
+            localStorage.removeItem('name');
+            localStorage.removeItem('is_admin');
+            window.location.href = '/login';
+        } else {
+            alert("שגיאה בהתנתקות");
+        }
+    } catch (err) {
+        console.error("Error logging out:", err);
+    }
+}
+
 
 (async function init() {
     await loadCategories();

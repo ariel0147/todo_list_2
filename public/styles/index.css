@@ -1,6 +1,4 @@
-/* =========================================
-   Global Reset & Font
-   ========================================= */
+
 * {
     box-sizing: border-box;
 }
@@ -22,9 +20,7 @@ a, button, input, select, table, th, td {
     cursor: none;
 }
 
-/* =========================================
-   Typography & Headings
-   ========================================= */
+
 h1 {
     font-size: 3rem;
     font-weight: 800;
@@ -55,12 +51,10 @@ hr {
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(0, 208, 255, 0.5), transparent);
     margin: 20px auto;
-    width: 60%; /* קו מפריד קצר יותר */
+    width: 60%;
 }
 
-/* =========================================
-   Forms & Containers
-   ========================================= */
+
 .add-task-container, .filter-container {
     background: rgba(22, 33, 62, 0.7);
     backdrop-filter: blur(16px);
@@ -68,7 +62,7 @@ hr {
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 
-    padding: 20px 40px; /* הקטנתי קצת את הריפוד */
+    padding: 20px 40px;
     margin: 20px auto;
     width: fit-content;
     border-radius: 16px;
@@ -90,11 +84,11 @@ input[type="text"], select {
     background: rgba(10, 25, 47, 0.8);
     border: 1px solid rgba(0, 208, 255, 0.2);
     color: #e6f1ff;
-    padding: 10px 20px; /* שדות קצת יותר נמוכים */
+    padding: 10px 20px;
     border-radius: 10px;
     font-size: 0.95rem;
     outline: none;
-    width: 280px; /* שדה קצת יותר צר */
+    width: 280px;
     font-family: inherit;
     transition: all 0.3s ease;
 }
@@ -124,21 +118,19 @@ button:hover {
     transform: translateY(-2px);
 }
 
-/* =========================================
-   Table Styling - גרסה מהודקת
-   ========================================= */
+
 table {
-    width: 75%; /* הקטנתי מ-90% ל-75% */
-    max-width: 1000px; /* הגבלה שלא תהיה ענקית במסכים גדולים */
+    width: 75%;
+    max-width: 1000px;
     margin: 30px auto;
     border-collapse: separate;
-    border-spacing: 0 10px; /* צמצום הרווח בין השורות */
+    border-spacing: 0 10px;
 }
 
 thead th {
     color: #64ffda;
     font-size: 1.1rem;
-    padding: 15px; /* פחות ריפוד */
+    padding: 15px;
     text-transform: uppercase;
     letter-spacing: 1.2px;
     border-bottom: 2px solid rgba(100, 255, 218, 0.2);
@@ -159,13 +151,13 @@ tbody tr td:last-child {
 }
 
 tbody tr:hover {
-    transform: scale(1.01); /* הגדלה עדינה יותר */
+    transform: scale(1.01);
     background: #233554;
     z-index: 10;
 }
 
 td {
-    padding: 12px 15px; /* הקטנה משמעותית של הגובה (היה 20px) */
+    padding: 12px 15px;
     font-size: 1rem;
     color: #ccd6f6;
     vertical-align: middle;
@@ -190,9 +182,7 @@ td button:hover {
     transform: scale(1.2);
 }
 
-/* =========================================
-   Task States & Cursor
-   ========================================= */
+
 input[type="checkbox"] {
     appearance: none;
     width: 20px;
@@ -238,7 +228,7 @@ input[type="checkbox"]:checked::after {
     z-index: 9999;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 20px rgba(100, 255, 218, 0.4);
-    transition: width 0.1s, height 0.1s; /* תגובה מהירה יותר */
+    transition: width 0.1s, height 0.1s;
     background: rgba(100, 255, 218, 0.05);
 }
 
@@ -251,4 +241,24 @@ input[type="checkbox"]:checked::after {
     background: #64ffda;
     border-radius: 50%;
     box-shadow: 0 0 10px #64ffda;
+}
+.logout-btn {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+
+
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    background: rgba(10, 25, 47, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 208, 255, 0.1);
+}
+
+.logout-btn:hover {
+    background: rgba(0, 208, 255, 0.15);
+    box-shadow: 0 0 15px rgba(0, 208, 255, 0.4);
+    transform: translateY(0);
 }
