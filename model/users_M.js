@@ -13,11 +13,20 @@ async function getOne(id){
     return result[0];
 }
 
-async function deleteUserFromDB(id){
-    const sql = 'DELETE FROM users WHERE id = ?';
-    console.log(sql);
-    let [rows] = await db.query(sql, [id]);
-    console.log(rows);
+
+
+async function deleteUserFromDB(id) {
+
+    const sqlTasks = 'DELETE FROM tasks WHERE user_id = ?';
+    await db.query(sqlTasks, [id]);
+
+    const sqlCategories = 'DELETE FROM categoris WHERE user_id = ?';
+    await db.query(sqlCategories, [id]);
+
+
+    const sqlUser = 'DELETE FROM users WHERE id = ?';
+    let [rows] = await db.query(sqlUser, [id]);
+
     return rows;
 }
 
